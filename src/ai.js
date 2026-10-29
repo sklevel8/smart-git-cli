@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url';
 import { config as loadEnv } from 'dotenv';
 import { GoogleGenAI } from '@google/genai';
 
-const MODEL = 'gemini-3.8-flash';
+export const MODEL = 'gemini-3.8-flash';
 const PACKAGE_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 // Load the CLI's own .env first, then allow a project-local .env to fill any gaps.

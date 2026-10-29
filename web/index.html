@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="description" content="smart-git studio — a local AI dashboard for Conventional Commits and pull request summaries." />
+  <title>smart-git studio</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="ambient" aria-hidden="true">
+    <div class="orb orb-one"></div>
+    <div class="orb orb-two"></div>
+    <div class="grid-overlay"></div>
+  </div>
+
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="smart-git studio home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none">
+          <path d="M10 7v18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+          <circle cx="10" cy="7" r="3" stroke="currentColor" stroke-width="2.4"/>
+          <circle cx="10" cy="25" r="3" stroke="currentColor" stroke-width="2.4"/>
+          <circle cx="23" cy="11" r="3" stroke="currentColor" stroke-width="2.4"/>
+          <path d="M13 7h3.5A6.5 6.5 0 0 1 23 13.5V14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+          <path d="M26.5 3.5l1.1 2.4 2.4 1.1-2.4 1.1-1.1 2.4-1.1-2.4-2.4-1.1 2.4-1.1 1.1-2.4Z" fill="currentColor"/>
+        </svg>
+      </span>
+      <span class="brand-text">smart-git <span>studio</span></span>
+    </a>
+
+    <div class="topbar-badges">
+      <span class="badge badge-model" id="model-badge">Gemini</span>
+      <span class="badge badge-local"><span class="dot"></span> Local only</span>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <section id="connect-view" class="connect-view">
+      <div class="hero">
+        <div class="eyebrow"><span class="pulse"></span> AI commit assistant</div>
+        <h1>Ship clean commits <span class="gradient-text">without the guesswork.</span></h1>
+        <p class="hero-copy">
+          Connect a local repository. Gemini reads the staged diff and writes a Conventional
+          Commit or a structured pull request summary — so you can spend your energy on the code,
+          not the commit box.
+        </p>
+        <div class="hero-points">
+          <span>Lockfile-aware diffs</span>
+          <span>12k character guardrail</span>
+          <span>Shell-safe commits</span>
+        </div>
+        <div class="hero-note">
+          <span class="hero-note-icon" aria-hidden="true">↳</span>
+          Your repository stays on this machine. Only the diff you choose to summarize is sent to Gemini.
+        </div>
+      </div>
+
+      <div class="connect-card card">
+        <div class="card-heading">
+          <div>
+            <h2>Connect a repository</h2>
+            <p>Choose a local folder that Git already tracks.</p>
+          </div>
+          <span class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M4 7.5A2.5 2.5 0 0 1 6.5 5h3l2 2h6A2.5 2.5 0 0 1 20 9.5v7A2.5 2.5 0 0 1 17.5 19h-11A2.5 2.5 0 0 1 4 16.5v-9Z" stroke="currentColor" stroke-width="1.7"/>
+            </svg>
+          </span>
+        </div>
+
+        <label class="field-label" for="repo-path">Repository path</label>
+        <div class="input-row">
+          <input
+            id="repo-path"
+            class="text-input mono"
+            type="text"
+            placeholder="C:\path\to\your\repo"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <button class="btn btn-ghost" data-action="browse-repo" type="button">Browse</button>
+        </div>
+
+        <button class="btn btn-primary btn-block" data-action="connect" type="button">
+          <span>Connect repository</span>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+
+        <div id="recent-repos" class="recent-repos" hidden>
+          <span class="recent-label">Recent</span>
+          <div id="recent-list" class="recent-list"></div>
+        </div>
+
+        <p class="connect-hint">
+          Tip: the dashboard runs on <code>127.0.0.1</code> and only reads repositories you explicitly connect.
+        </p>
+      </div>
+
+      <div class="terminal-card" aria-hidden="true">
+        <div class="terminal-head">
+          <span class="terminal-dots"><i></i><i></i><i></i></span>
+          <span class="terminal-title">smart-git — bash</span>
+        </div>
+        <pre><span class="t-muted">$</span> git add .
+<span class="t-muted">$</span> smart-git commit
+<span class="t-cyan">◇</span> Generating commit message with Gemini...
+<span class="t-green">feat(ui): add repository dashboard</span>
+<span class="t-muted">? Commit with this message? (y/N)</span> <span class="t-green">y</span>
+<span class="t-muted">[main 8f3c1a2] feat(ui): add repository dashboard</span></pre>
+      </div>
+    </section>
+
+    <section id="workspace-view" class="workspace-view" hidden></section>
+  </main>
+
+  <div id="toasts" class="toasts" role="status" aria-live="polite"></div>
+  <div id="modal-root"></div>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
